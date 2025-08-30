@@ -1,18 +1,22 @@
-# Computer-Graphics-Final-Project
+# 3D reconstruction of C elegans
 
-When analysing the effects of different stimuli on the microscopic roundworm c.elegans, PhD student Divyashree's work at AP lab involves measuring curvature and thickness of its intestine. Her current method of analysing this includes taking an input z-stack and making measurements in 2d from roughly a middle position of the worm.
+This project was motivated as a way to help a PhD student at a Biology lab at Ashoka University with a problem she was having that required her to manually measure thousands of samples for her work. By the time I finished solving this problem, she had finished manually measuring all samples and moved onto a later stage of her PhD, but I think my solution can serve to be a good reference for those who work on this problem in the future. 
 
-The issue with this method is that it entirely ignores curvature and thickness in the 3D dimension. Further, given that certain parts of the image are unclear in 2D, it can be difficult to tell if they are part of the intestine or not, meaning useful information may be lost. We can estimate this information from stacks adjacent to the target image. The current method is also fully manual and in this project I aim to autmoate it
+The task was to measure the curvature and thickness of the microscopic roundwork C. elegans. The complexity of this task is as follows:
+(1) Measurements must be done from a stack of orthogonally projected 2D image ("slices") of a 3D worm (see GIF below for the images in sequence)
+(2) Curvature and thickness of the intestine must be measured relative to the worm body (i.e. the twisted shape of the worm should not count towards the curvature of it's intestine. Curvature should be calculated as though the worm was not twisted and laid flat).
+
+The PhD student's work involved roughly measuring the worm in different 2D images and at different points and taking an average result. She further labelled curvature with a rough heuristic of how curved a given worm was. 
+
+The issue with this method is that it entirely ignores curvature and thickness in the 3D dimension. Further, given that certain parts of the image are unclear in 2D, it can be difficult to tell if they are part of the intestine or not, meaning useful information may be lost. We can estimate this information from stacks adjacent to the target image.
 
 For this project, I aim to create a multi stage pipeline to move from an input z-stack to 3d representation of the microscopic worm c elegans from which measurements can be made.
 
 ## Limitations
 
 1. I have only one fully labeled image
-- My method and any changing must be based on general features of the intestine not on this specific image
-- Hence, I tried to visually fine tune my work on unlabelled images, but test on my labeled stack
+My method and any changing must be based on general features of the intestine not on this specific image. Hence, I tried to visually fine tune my work on unlabelled images, but test on my labeled stack. 
 2. I also only have a labelled trimap (label of 1, 0, and unknown at each point) as it is difficult to get a complete ground truth in 3D
-- Hence I
 
 
 ## Input
@@ -35,7 +39,7 @@ To estimate the trimap I use a sato filter and apply multi Otsu's Thresholding o
 - Calculates the hessian
 - Take the eigen values of the hessian to detect ridge structures
 - Along the eigenvectors, there is no change in intensity, while perpendicular to the eigenvectors there is a change in intensity
-- I am unclear of the difference between Sato and similar other filters (meijering and the frangi filters), except that Sato works for 3D
+- I am unclear of the difference between Sato and similar other filters (meijering and the frangi filters), except that the Sato filter works for 3D
 
 #### (Multi) Otsu's Thresholding
 
@@ -73,7 +77,7 @@ Stage 1 RMSE: 28.476046726131596
 - Standard skelearn knn algorithm
 - distance weight function using gaussian
 - minor implementation detail:
-incorporate the distance metric into scaling of the pcl, instead of calculating it each time since:
+incorporate the distance metric into scaling of the point cloud, instead of calculating it each time since:
 $$e^{-d^{2}/2 (n\sigma)^{2}} = e^{-(d/n)^{2}/2 \sigma^{2}}$$
 
 #### Stage 2 results
@@ -134,7 +138,7 @@ While this was part of my original plan, I discarded this step. As we can see RM
 
 #### Further Denoising
 
-- Statistical outlier detection
+- Statistical outlier detection: this is a fairly straightforward step where I removed statistical outlier points. The cleaning done by this was minimal but it deals with extreme noise.
 
 ## Stage 5: Mesh generation
 
@@ -156,3 +160,4 @@ We can use the above to do measurements on the image in the 3D space
 - benchmarking against a larger dataset or against a true 3D benchmark to measure accuracy
 - collapsing the mesh to a single line for measurements of curvature
 - segmenting out the worm 'head'
+- the best solution to a problem like this probably involves ML, but for that we need a much larger dataset (which as far as I know does not exist)
