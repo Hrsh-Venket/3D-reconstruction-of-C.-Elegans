@@ -55,15 +55,13 @@ To estimate the trimap I use a sato filter and apply multi Otsu's Thresholding o
 #### Stage 1 Results
 Stage 1 RMSE: 28.476046726131596
 
-![](Pasted image 20240510145223.png)
+![](Pasted%20image%2020240510145223.png)
 
-![](Pasted image 20240510145245.png)
+![](Pasted%20image%2020240510145245.png)
 
-![](Pasted image 20240510145304.png)
+![](Pasted%20image%2020240510145304.png)
 
-![](Pasted image 20240510145331.png)
-
----
+![](Pasted%20image%2020240510145331.png)
 
 ## Stage 2: Label propogation
 
@@ -88,14 +86,13 @@ Stage 1 RMSE: 28.476046726131596
 
 Stage 2 RMSE: 25.12695109038175
 
-![](Pasted image 20240510151758.png)
+![](Pasted%20image%2020240510151758.png)
 
-![](Pasted image 20240510151811.png)
+![](Pasted%20image%2020240510151811.png)
 
-![](Pasted image 20240510151828.png)
+![](Pasted%20image%2020240510151828.png)
 
-![](Pasted image 20240510151839.png)
-
+![](Pasted%20image%2020240510151839.png)
 
 ## Stage 3: Denoising
 
@@ -116,17 +113,13 @@ Stage 3 RMSE: 30.780235769535096
 
 While this was part of my original plan, I discarded this step. As we can see RMSE increases, and we can see in the images that this is becuase we lose parts of the intestine which are not connected to the larger body.
 
-![[]]
-![](Pasted image 20240510152410.png)
+![](Pasted%20image%2020240510152410.png)
 
-![[]]
-![](Pasted image 20240510152818.png)
+![](Pasted%20image%2020240510152818.png)
 
-![[]]
-![](Pasted image 20240510152832.png)
+![](Pasted%20image%2020240510152832.png)
 
-![[]]
-![](Pasted image 20240510153159.png)
+![](Pasted%20image%2020240510153159.png)
 
 ## Stage 4: Projection to 3D
 
